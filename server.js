@@ -45,14 +45,28 @@ app.post('/posts/:postId/comment', function (req, res) {
       if (err) throw err;
       res.send(data)
       console.log(data);
+
     });
-    //    
-    // data.save(function (err, data) {
-    //   if (err) throw err;
-    //   else res.send(data);
-    // })
   })
 })
+
+app.delete('/delete/:postId/comment/:commentId', function (req, res) {
+  Post.findById(req.params.postId, function (err, data) {
+    if (err) throw err;
+    for(let i = 0; i < data.comments.length; i ++){
+      if(req.params.commentId == data.comments[i]._id){
+          data.comments.splice(i, 1);
+          data.save(function (err) {
+            if (err) throw err;
+            console.log('the subdocs were removed');
+            res.send();
+          });
+      }
+    }
+
+  })
+})
+
 
 
 // var mypost=new Post ({
