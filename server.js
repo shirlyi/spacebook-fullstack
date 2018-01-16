@@ -53,7 +53,7 @@ app.post('/posts/:postId/comment', function (req, res) {
 app.delete('/delete/:postId/comment/:commentId', function (req, res) {
   Post.findById(req.params.postId, function (err, data) {
     if (err) throw err;
-    for(let i = 0; i < data.comments.length; i ++){
+    for(var i = 0; i < data.comments.length; i ++){
       if(req.params.commentId == data.comments[i]._id){
           data.comments.splice(i, 1);
           data.save(function (err) {
@@ -63,7 +63,6 @@ app.delete('/delete/:postId/comment/:commentId', function (req, res) {
           });
       }
     }
-
   })
 })
 
